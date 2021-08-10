@@ -24,7 +24,7 @@ Add dependency in your app module
 
 ```
 	dependencies {
-	        implementation 'com.github.vishalscc:Shake-To-Feedback:1.1'
+	        implementation 'com.github.vishalscc:Shake-To-Feedback:1.8'
 	}
 
 ```

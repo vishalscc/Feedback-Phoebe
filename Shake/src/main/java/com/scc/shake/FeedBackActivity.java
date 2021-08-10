@@ -56,12 +56,12 @@ public class FeedBackActivity extends AppCompatActivity {
 
     private void sendToServer(Feedback feedback) {
 
-        String msg = "Description: " + feedback.getText() + "\n" +
-                "Device OS: " + feedback.getDeviceOS() + "\n" +
-                "Device Type: " + feedback.getDeviceType() + "\n" +
-                "Device Model: " + feedback.getDeviceModel() + "\n" +
-                "Page Name: " + feedback.getPageName() + "\n" +
-                "Manufacturer: " + feedback.getManufacturer();
+        String msg = "Description:- " + feedback.getText() + "\n\n" +
+                "Device OS:- " + feedback.getDeviceOS() + "\n\n" +
+                "Device Type:- " + feedback.getDeviceType() + "\n\n" +
+                "Device Model:- " + feedback.getDeviceModel() + "\n\n" +
+                "Page Name:- " + feedback.getPageName() + "\n\n" +
+                "Manufacturer:- " + feedback.getManufacturer();
 
         new AlertDialog.Builder(this)
                 .setTitle("Feedback Details")

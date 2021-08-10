@@ -61,7 +61,8 @@ public class FeedBackActivity extends AppCompatActivity {
                 "Device Type:- " + feedback.getDeviceType() + "\n\n" +
                 "Device Model:- " + feedback.getDeviceModel() + "\n\n" +
                 "Page Name:- " + feedback.getPageName() + "\n\n" +
-                "Manufacturer:- " + feedback.getManufacturer();
+                "Manufacturer:- " + feedback.getManufacturer() + "\n\n" +
+                "API Token:- " + Utils.getToken(feedback.getContext());
 
         new AlertDialog.Builder(this)
                 .setTitle("Feedback Details")

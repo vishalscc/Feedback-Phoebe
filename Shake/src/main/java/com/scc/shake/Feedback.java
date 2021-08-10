@@ -1,28 +1,19 @@
 package com.scc.shake;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Feedback implements Parcelable {
 
 
-    public static final Creator<Feedback> CREATOR = new Creator<Feedback>() {
-        @Override
-        public Feedback createFromParcel(Parcel in) {
-            return new Feedback(in);
-        }
-
-        @Override
-        public Feedback[] newArray(int size) {
-            return new Feedback[size];
-        }
-    };
     String text;
     String deviceOS;
     String deviceType;
     String deviceModel;
     String pageName;
     String manufacturer;
+    Context context;
 
 
     public Feedback() {
@@ -35,6 +26,26 @@ public class Feedback implements Parcelable {
         deviceModel = in.readString();
         pageName = in.readString();
         manufacturer = in.readString();
+    }
+
+    public static final Creator<Feedback> CREATOR = new Creator<Feedback>() {
+        @Override
+        public Feedback createFromParcel(Parcel in) {
+            return new Feedback(in);
+        }
+
+        @Override
+        public Feedback[] newArray(int size) {
+            return new Feedback[size];
+        }
+    };
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     public String getText() {
@@ -84,6 +95,7 @@ public class Feedback implements Parcelable {
     public void setPageName(String pageName) {
         this.pageName = pageName;
     }
+
 
     @Override
     public int describeContents() {

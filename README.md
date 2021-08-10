@@ -63,7 +63,7 @@ Option 1:  If you don't have another class extended in your activity then extend
 	
 ```
 
-Option 2: if you have another class extend then you can extend `FeedbackPhoebeActivity` to that class like this:
+Option 2: if you have your own class extend in your activity then you can extend `FeedbackPhoebeActivity` to that class like this:
 
 ```java
 

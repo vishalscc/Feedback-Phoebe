@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 
@@ -44,7 +43,7 @@ public class Shake {
                 feedback.setDeviceModel(Build.MODEL);
                 feedback.setDeviceOS("Android " + getAndroidVersion(android.os.Build.VERSION.SDK_INT));
                 feedback.setDeviceType("Android");
-                feedback.setPageName(String.valueOf(context.getSupportActionBar().getTitle()));
+                feedback.setPageName(String.valueOf(context.getSupportActionBar().getTitle() == null ? "" : context.getSupportActionBar().getTitle()));
                 feedback.setText("");
                 feedback.setManufacturer(Build.MANUFACTURER);
 

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LibraryTest">
         <activity
+            android:name=".MainActivity2"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -22,7 +25,6 @@
         <meta-data
             android:name="FEEDBACK_PHOEBE_TOKEN"
             android:value="HoXcvy1EBm3VQG0hhg24GkLxEHEEBm3VQG0hh" />
-
     </application>
 
 </manifest>

@@ -12,21 +12,22 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.io.File;
 import java.io.FileOutputStream;
 
-public class Shake {
+public class FeedbackPhoebe {
 
+    public static int submitColor = 0;
+    public static int dialogButtonColor = 0;
+    public static Context context;
+    public static int cancelColor=0;
     private SensorManager mSensorManager;
     private ShakeEffect mSensorListener;
     private Vibrator vibrator;
-    public static Context context;
 
     public void launch(Context context) {
 
-        Shake.context = context;
+        FeedbackPhoebe.context = context;
 
         Toast.makeText(context, "Demo", Toast.LENGTH_SHORT).show();
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -53,11 +54,25 @@ public class Shake {
 
                 Intent intent = new Intent(context, FeedBackActivity.class);
                 intent.putExtra("feedback", feedback);
+                intent.putExtra("cancelColor", cancelColor);
+                intent.putExtra("submitColor", submitColor);
+                intent.putExtra("dialogButtonColor", dialogButtonColor);
                 context.startActivity(intent);
             }
         });
 
-//        takeScreenshot(context,"");
+    }
+
+    public void setSubmitButtonColor(int color) {
+        submitColor = color;
+    }
+
+    public void setCancelButtonColor(int color) {
+        cancelColor = color;
+    }
+
+    public void setDialogButtonColor(int color) {
+        dialogButtonColor = color;
     }
 
     private String getAndroidVersion(int version) {

@@ -1,21 +1,28 @@
 package com.scc.shake;
 
+import android.content.res.ColorStateList;
+import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class FeedBackActivity extends AppCompatActivity {
 
     Feedback feedback;
+    FeedbackPhoebe feedbackPhoebe;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
+        feedbackPhoebe = new FeedbackPhoebe();
 
         feedback = getIntent().getParcelableExtra("feedback");
 
@@ -24,6 +31,16 @@ public class FeedBackActivity extends AppCompatActivity {
         TextView cancel_btn = findViewById(R.id.cancel_btn);
         EditText edt_report = findViewById(R.id.edt_report);
 
+        int submitColor = getIntent().getIntExtra("submitColor", R.color.blue);
+        int cancelColor = getIntent().getIntExtra("cancelColor", R.color.white);
+        int dialogButtonColor = getIntent().getIntExtra("dialogButtonColor", R.color.white);
+
+        submit_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(Config.submitColor)));
+        cancel_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(Config.cancelColor)));
+
+
+
+
         submit_btn.setOnClickListener(view -> {
 
             if (edt_report.getText().toString().isEmpty()) {
@@ -31,7 +48,7 @@ public class FeedBackActivity extends AppCompatActivity {
                 return;
             }
 
-            new AlertDialog.Builder(this)
+            AlertDialog alertDialog = new AlertDialog.Builder(this)
                     .setTitle("Feedback")
                     .setMessage("Are you sure you want to submit feedback?")
                     .setPositiveButton("Yes", (dialogInterface, i) -> {
@@ -43,7 +60,15 @@ public class FeedBackActivity extends AppCompatActivity {
                     .setNegativeButton("No", (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     })
-                    .show();
+                    .create();
+
+            alertDialog.setOnShowListener(dialogInterface -> {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Config.dialogButtonColor);
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Config.dialogButtonColor);
+            });
+
+            alertDialog.show();
+
 
         });
 
@@ -62,7 +87,7 @@ public class FeedBackActivity extends AppCompatActivity {
                 "Device Model:- " + feedback.getDeviceModel() + "\n\n" +
                 "Page Name:- " + feedback.getPageName() + "\n\n" +
                 "Manufacturer:- " + feedback.getManufacturer() + "\n\n" +
-                "API Token:- " + Utils.getToken(Shake.context);
+                "API Token:- " + Utils.getToken(FeedbackPhoebe.context);
 
         new AlertDialog.Builder(this)
                 .setTitle("Feedback Details")

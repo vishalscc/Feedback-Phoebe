@@ -1,32 +1,33 @@
 package com.scc.shake;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class BaseActivity extends AppCompatActivity {
+public class FeedbackPhoebeActivity extends AppCompatActivity {
 
-    Shake shake;
+    FeedbackPhoebe feedbackPhoebe;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        shake = new Shake();
-        shake.launch(this);
+
+        feedbackPhoebe = new FeedbackPhoebe();
+        feedbackPhoebe.launch(this);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        shake.register();
+        feedbackPhoebe.register();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        shake.unRegister();
+        feedbackPhoebe.unRegister();
     }
 }

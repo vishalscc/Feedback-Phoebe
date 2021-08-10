@@ -1,5 +1,7 @@
 # Shake-To-Feedback
 
+
+
 ## Dependency Project Level
 
 Step 1. Add the JitPack repository to your build file
@@ -43,12 +45,12 @@ You can get token from website after sign up, add token in manifest in meta-data
 
 ## Usage
 
-If you don't want modication or you don't have another class extended then extend `BaseActivity` in Activity which you want to send feedback of that Activity
+Option 1:  If you don't have another class extended in your activity then extend `FeedbackPhoebeActivity` in Activity which you want to send feedback of that Activity
 
-```java
+``` java
 
 
-	public class MainActivity extends BaseActivity {
+	public class YourActivity extends FeedbackPhoebeActivity {
 
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
@@ -61,36 +63,61 @@ If you don't want modication or you don't have another class extended then exten
 	
 ```
 
-Or if you have another class extend then add this code in that class like this:
+Option 2: if you have another class extend then you can extend `FeedbackPhoebeActivity` to that class like this:
 
 ```java
 
 
-	public class BaseActivity extends AppCompatActivity {
+	public class YourParentActivity extends FeedbackPhoebeActivity {
 
-	    Shake shake;
 	    @Override
 	    protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		shake = new Shake();
-		shake.launch(this);
+
+	    }
+
+	}
+	
+
+```
+
+Option 3: If you don't want to extend class then you can implement without extending `FeedbackPhoebeActivity` class 
+
+#### Note: FeedbackPhoebe must be register in `onResume()` and must be unregister in `onPause()`
+
+
+```java
+
+
+	public class YourActivity extends AppCompatActivity {
+
+	    FeedbackPhoebe feedbackPhoebe;
+
+	    @Override
+	    protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		feedbackPhoebe = new FeedbackPhoebe();
+		feedbackPhoebe.launch(this);
 
 	    }
 
 	    @Override
 	    protected void onResume() {
 		super.onResume();
-		shake.register();
+		feedbackPhoebe.register();
 	    }
 
 	    @Override
 	    protected void onPause() {
 		super.onPause();
-		shake.unRegister();
+		feedbackPhoebe.unRegister();
 	    }
 	}
 	
 
 ```
+
+
 
 

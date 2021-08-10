@@ -10,7 +10,7 @@ Add it in your root build.gradle at the end of repositories:
 
 
 
-```
+```groovy
 	allprojects {
 		repositories {
 			...
@@ -24,7 +24,7 @@ Add it in your root build.gradle at the end of repositories:
 
 Add dependency in your app module
 
-```
+```groovy
 	dependencies {
 	        implementation 'com.github.vishalscc:Shake-To-Feedback:1.8'
 	}

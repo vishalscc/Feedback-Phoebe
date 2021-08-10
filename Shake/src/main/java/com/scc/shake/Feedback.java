@@ -7,6 +7,17 @@ import android.os.Parcelable;
 public class Feedback implements Parcelable {
 
 
+    public static final Creator<Feedback> CREATOR = new Creator<Feedback>() {
+        @Override
+        public Feedback createFromParcel(Parcel in) {
+            return new Feedback(in);
+        }
+
+        @Override
+        public Feedback[] newArray(int size) {
+            return new Feedback[size];
+        }
+    };
     String text;
     String deviceOS;
     String deviceType;
@@ -26,19 +37,8 @@ public class Feedback implements Parcelable {
         deviceModel = in.readString();
         pageName = in.readString();
         manufacturer = in.readString();
+//        context = (Context) in.readValue(ClassLoader.getSystemClassLoader());
     }
-
-    public static final Creator<Feedback> CREATOR = new Creator<Feedback>() {
-        @Override
-        public Feedback createFromParcel(Parcel in) {
-            return new Feedback(in);
-        }
-
-        @Override
-        public Feedback[] newArray(int size) {
-            return new Feedback[size];
-        }
-    };
 
     public Context getContext() {
         return context;
@@ -52,16 +52,16 @@ public class Feedback implements Parcelable {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public String getManufacturer() {
         return manufacturer;
     }
 
     public void setManufacturer(String manufacturer) {
         this.manufacturer = manufacturer;
-    }
-
-    public void setText(String text) {
-        this.text = text;
     }
 
     public String getDeviceOS() {
@@ -110,5 +110,6 @@ public class Feedback implements Parcelable {
         parcel.writeString(deviceModel);
         parcel.writeString(pageName);
         parcel.writeString(manufacturer);
+//        parcel.write(context);
     }
 }

@@ -22,8 +22,12 @@ public class Shake {
     private SensorManager mSensorManager;
     private ShakeEffect mSensorListener;
     private Vibrator vibrator;
+    public static Context context;
 
     public void launch(Context context) {
+
+        Shake.context = context;
+
         Toast.makeText(context, "Demo", Toast.LENGTH_SHORT).show();
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -46,7 +50,6 @@ public class Shake {
                 feedback.setPageName(context.getClass().getSimpleName());
                 feedback.setText("");
                 feedback.setManufacturer(Build.MANUFACTURER);
-                feedback.setContext(context);
 
                 Intent intent = new Intent(context, FeedBackActivity.class);
                 intent.putExtra("feedback", feedback);

@@ -18,6 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="FEEDBACK_PHOEBE_TOKEN"
+            android:value="HoXcvy1EBm3VQG0hhg24GkLxEHEEBm3VQG0hh" />
+
     </application>
 
 </manifest>

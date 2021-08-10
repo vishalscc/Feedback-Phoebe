@@ -43,7 +43,7 @@ public class Shake {
                 feedback.setDeviceModel(Build.MODEL);
                 feedback.setDeviceOS("Android " + getAndroidVersion(android.os.Build.VERSION.SDK_INT));
                 feedback.setDeviceType("Android");
-//                feedback.setPageName(String.valueOf(context.getSupportActionBar() == null ? "" : context.getSupportActionBar().getTitle()));
+                feedback.setPageName(context.getClass().getSimpleName());
                 feedback.setText("");
                 feedback.setManufacturer(Build.MANUFACTURER);
 

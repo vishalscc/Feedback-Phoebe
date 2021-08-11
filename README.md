@@ -1,4 +1,5 @@
 # Shake-To-Feedback
+Shake to send feedback for Android
 
 
 
@@ -116,6 +117,30 @@ Option 3: If you don't want to extend class then you can implement without exten
 	}
 	
 
+```
+
+## Customization
+
+You can customize color by `FeedbackConfig()` class. Set
+
+``` java 
+
+	public class YourAppName extends Application {
+
+	    @Override
+	    public void onCreate() {
+		super.onCreate();
+
+		new FeedbackConfig()
+			.setCancelButtonColor(R.color.your_color)
+			.setDialogButtonColor(R.color.your_color)
+			.setSubmitButtonTextColor(R.color.your_color)
+                        .setCancelButtonTextColor(R.color.your_color)
+			.setSubmitButtonColor(R.color.your_color);
+
+	    }
+	}
+	
 ```
 
 

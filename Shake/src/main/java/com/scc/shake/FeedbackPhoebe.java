@@ -15,21 +15,20 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 
+/**
+ * FeedbackPhoebe contains Shake sensor detect and open feedback page
+ */
 public class FeedbackPhoebe {
 
     public static int submitColor = 0;
     public static int dialogButtonColor = 0;
-    public static Context context;
-    public static int cancelColor=0;
+    public static int cancelColor = 0;
     private SensorManager mSensorManager;
     private ShakeEffect mSensorListener;
     private Vibrator vibrator;
 
     public void launch(Context context) {
 
-        FeedbackPhoebe.context = context;
-
-        Toast.makeText(context, "Demo", Toast.LENGTH_SHORT).show();
         vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         mSensorListener = new ShakeEffect();
@@ -46,7 +45,7 @@ public class FeedbackPhoebe {
                 Feedback feedback = new Feedback();
 
                 feedback.setDeviceModel(Build.MODEL);
-                feedback.setDeviceOS("Android " + getAndroidVersion(android.os.Build.VERSION.SDK_INT));
+                feedback.setDeviceOS("Android " + Build.VERSION.RELEASE);
                 feedback.setDeviceType("Android");
                 feedback.setPageName(context.getClass().getSimpleName());
                 feedback.setText("");

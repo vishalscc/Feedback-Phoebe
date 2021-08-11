@@ -1,7 +1,6 @@
 package com.scc.shake;
 
 import android.content.res.ColorStateList;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -12,6 +11,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Feedback page user can submit their feedback in this page and send to server
+ */
 public class FeedBackActivity extends AppCompatActivity {
 
     Feedback feedback;
@@ -35,10 +37,12 @@ public class FeedBackActivity extends AppCompatActivity {
         int cancelColor = getIntent().getIntExtra("cancelColor", R.color.white);
         int dialogButtonColor = getIntent().getIntExtra("dialogButtonColor", R.color.white);
 
-        submit_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(Config.submitColor)));
-        cancel_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(Config.cancelColor)));
-
-
+        if (FeedbackConfig.getSubmitButtonColor() != 0) {
+            submit_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(FeedbackConfig.getSubmitButtonColor())));
+        }
+        if (FeedbackConfig.getCancelButtonColor() != 0) {
+            cancel_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(FeedbackConfig.getCancelButtonColor())));
+        }
 
 
         submit_btn.setOnClickListener(view -> {
@@ -62,12 +66,20 @@ public class FeedBackActivity extends AppCompatActivity {
                     })
                     .create();
 
+
             alertDialog.setOnShowListener(dialogInterface -> {
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Config.dialogButtonColor);
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Config.dialogButtonColor);
+                if (FeedbackConfig.getDialogButtonColor() != 0) {
+                    int color = FeedbackConfig.getDialogButtonColor();
+                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                            .setTextColor(getResources().getColor(color));
+                    alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                            .setTextColor(getResources().getColor(color));
+                }
             });
 
             alertDialog.show();
+
+
 
 
         });
@@ -81,13 +93,19 @@ public class FeedBackActivity extends AppCompatActivity {
 
     private void sendToServer(Feedback feedback) {
 
+        if (Utils.getToken(this).isEmpty()) {
+            Toast.makeText(this, "Api Token can't be empty", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String msg = "Description:- " + feedback.getText() + "\n\n" +
                 "Device OS:- " + feedback.getDeviceOS() + "\n\n" +
                 "Device Type:- " + feedback.getDeviceType() + "\n\n" +
                 "Device Model:- " + feedback.getDeviceModel() + "\n\n" +
                 "Page Name:- " + feedback.getPageName() + "\n\n" +
                 "Manufacturer:- " + feedback.getManufacturer() + "\n\n" +
-                "API Token:- " + Utils.getToken(FeedbackPhoebe.context);
+                "API Token:- " + Utils.getToken(this);
+
 
         new AlertDialog.Builder(this)
                 .setTitle("Feedback Details")

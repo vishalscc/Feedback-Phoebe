@@ -6,7 +6,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 /**
- * Created by VISHAL on 10/27/2020.
+ * Shake utility class manage shake gesture and forse
  */
 public class ShakeEffect implements SensorEventListener {
 

@@ -4,6 +4,11 @@ import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
+/**
+ * Hold data of device info with feedback to send to server
+ */
+
 public class Feedback implements Parcelable {
 
 

@@ -5,7 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+/**
+ * Base Activity for all page so user only extend this class and rest will work automatically
+ */
 public class FeedbackPhoebeActivity extends AppCompatActivity {
 
     FeedbackPhoebe feedbackPhoebe;

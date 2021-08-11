@@ -121,7 +121,7 @@ Option 3: If you don't want to extend class then you can implement without exten
 
 ## Customization
 
-You can customize color by `FeedbackConfig()` class. Set
+You can customize color by `FeedbackConfig()` class. Set this class in your `Application` class.
 
 ``` java 
 

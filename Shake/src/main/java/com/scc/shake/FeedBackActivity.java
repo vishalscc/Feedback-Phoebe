@@ -44,6 +44,14 @@ public class FeedBackActivity extends AppCompatActivity {
             cancel_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(FeedbackConfig.getCancelButtonColor())));
         }
 
+        if (FeedbackConfig.getSubmitButtonTextColor() != 0){
+            submit_btn.setTextColor(ColorStateList.valueOf(getColor(FeedbackConfig.getSubmitButtonTextColor())));
+        }
+
+        if (FeedbackConfig.getCancelButtonTextColor() != 0){
+            cancel_btn.setTextColor(ColorStateList.valueOf(getColor(FeedbackConfig.getCancelButtonTextColor())));
+        }
+
 
         submit_btn.setOnClickListener(view -> {
 

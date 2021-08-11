@@ -13,6 +13,8 @@ public class MyApp extends Application {
         new FeedbackConfig()
                 .setCancelButtonColor(R.color.teal_700)
                 .setDialogButtonColor(R.color.blue)
+                .setSubmitButtonTextColor(R.color.design_default_color_error)
+                .setCancelButtonTextColor(R.color.teal_200)
                 .setSubmitButtonColor(R.color.teal_200);
 
     }

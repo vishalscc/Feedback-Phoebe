@@ -8,6 +8,6 @@
 //        jcenter() // Warning: this repository is going to shut down soon
 //    }
 //}
-rootProject.name = "LibraryTest"
+rootProject.name = "Feedback Phoebe"
 include ':app'
 include ':Shake'

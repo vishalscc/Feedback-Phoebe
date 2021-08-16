@@ -3,6 +3,7 @@ package com.scc.shake;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.SpannableString;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,10 @@ public class FeedBackActivity extends AppCompatActivity {
 
     Feedback feedback;
     FeedbackPhoebe feedbackPhoebe;
+    SpannableString title;
+    SpannableString msg;
+    SpannableString posBtn;
+    SpannableString negBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -33,9 +38,6 @@ public class FeedBackActivity extends AppCompatActivity {
         TextView cancel_btn = findViewById(R.id.cancel_btn);
         EditText edt_report = findViewById(R.id.edt_report);
 
-        int submitColor = getIntent().getIntExtra("submitColor", R.color.blue);
-        int cancelColor = getIntent().getIntExtra("cancelColor", R.color.white);
-        int dialogButtonColor = getIntent().getIntExtra("dialogButtonColor", R.color.white);
 
         if (FeedbackConfig.getSubmitButtonColor() != 0) {
             submit_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(FeedbackConfig.getSubmitButtonColor())));
@@ -44,12 +46,32 @@ public class FeedBackActivity extends AppCompatActivity {
             cancel_btn.setBackgroundTintList(ColorStateList.valueOf(getColor(FeedbackConfig.getCancelButtonColor())));
         }
 
-        if (FeedbackConfig.getSubmitButtonTextColor() != 0){
+        if (FeedbackConfig.getSubmitButtonTextColor() != 0) {
             submit_btn.setTextColor(ColorStateList.valueOf(getColor(FeedbackConfig.getSubmitButtonTextColor())));
         }
 
-        if (FeedbackConfig.getCancelButtonTextColor() != 0){
+        if (FeedbackConfig.getCancelButtonTextColor() != 0) {
             cancel_btn.setTextColor(ColorStateList.valueOf(getColor(FeedbackConfig.getCancelButtonTextColor())));
+        }
+
+        if (FeedbackConfig.getFontFromResource() != null) {
+            edt_report.setTypeface(FeedbackConfig.getFontFromResource());
+            cancel_btn.setTypeface(FeedbackConfig.getFontFromResource());
+            submit_btn.setTypeface(FeedbackConfig.getFontFromResource());
+            title = Utils.typeface(FeedbackConfig.getFontFromResource(), "Feedback");
+            msg = Utils.typeface(FeedbackConfig.getFontFromResource(), "Are you sure you want to submit feedback?");
+            posBtn = Utils.typeface(FeedbackConfig.getFontFromResource(), "Yes");
+            negBtn = Utils.typeface(FeedbackConfig.getFontFromResource(), "No");
+        }
+
+        if (FeedbackConfig.getFontFromAssets() != null) {
+            edt_report.setTypeface(FeedbackConfig.getFontFromAssets());
+            cancel_btn.setTypeface(FeedbackConfig.getFontFromAssets());
+            submit_btn.setTypeface(FeedbackConfig.getFontFromAssets());
+            title = Utils.typeface(FeedbackConfig.getFontFromAssets(), "Feedback");
+            msg = Utils.typeface(FeedbackConfig.getFontFromAssets(), "Are you sure you want to submit feedback?");
+            posBtn = Utils.typeface(FeedbackConfig.getFontFromAssets(), "Yes");
+            negBtn = Utils.typeface(FeedbackConfig.getFontFromAssets(), "No");
         }
 
 
@@ -61,15 +83,15 @@ public class FeedBackActivity extends AppCompatActivity {
             }
 
             AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle("Feedback")
-                    .setMessage("Are you sure you want to submit feedback?")
-                    .setPositiveButton("Yes", (dialogInterface, i) -> {
+                    .setTitle(title)
+                    .setMessage(msg)
+                    .setPositiveButton(posBtn, (dialogInterface, i) -> {
 
                         feedback.setText(edt_report.getText().toString());
                         sendToServer(feedback);
 
                     })
-                    .setNegativeButton("No", (dialogInterface, i) -> {
+                    .setNegativeButton(negBtn, (dialogInterface, i) -> {
                         dialogInterface.dismiss();
                     })
                     .create();
@@ -86,8 +108,6 @@ public class FeedBackActivity extends AppCompatActivity {
             });
 
             alertDialog.show();
-
-
 
 
         });

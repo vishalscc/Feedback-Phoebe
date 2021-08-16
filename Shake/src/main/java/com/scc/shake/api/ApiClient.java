@@ -14,7 +14,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class ApiClient {
 
-    private static final String BASE_URL = "";
+    private static final String BASE_URL = "http://192.168.0.111/best/Feedback-Phoebe/public/api/";
 
     private static final OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
@@ -46,6 +46,7 @@ public class ApiClient {
             API_SERVICE_INSTANCE = getRetrofit().create(ApiService.class);
         return API_SERVICE_INSTANCE;
     }
+
 
     public static void cancelAllRequest() {
         if (okHttpClient != null)

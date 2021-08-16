@@ -1,17 +1,19 @@
 package com.scc.shake.api;
 
-import retrofit2.http.Header;
+import retrofit2.http.Field;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface ApiService {
 
 
-//    @POST("resources/accessTokens")
-//    Call<AccessTokenResponse> getAccessToken(@Header("Authorization") String authorization,
-//                                             @Query("userId") String userId,
-//                                             @Query("externalActionId") String externalActionId,
-//                                             @Query("ttlInSecs") int ttlInSecs);
+    @POST("sentFeedback")
+    Call<AccessTokenResponse> sentFeedback(@Field("token") String token,
+                                           @Field("lang") String lang,
+                                           @Field("device_type") String device_type,
+                                           @Field("model") String model,
+                                           @Field("page_name") String page_name,
+                                           @Field("text") String text,
+                                           @Field("os") int os);
 
 
 

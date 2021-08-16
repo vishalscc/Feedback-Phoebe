@@ -1,4 +1,4 @@
-# Shake-To-Feedback
+# Feedback Phoebe
 Shake to send feedback for Android
 
 
@@ -27,7 +27,7 @@ Add dependency in your app module
 
 ```gradle
 	dependencies {
-	        implementation 'com.github.vishalscc:Shake-To-Feedback:1.8'
+	        implementation 'com.github.vishalscc:Shake-To-Feedback:1.9'
 	}
 
 ```

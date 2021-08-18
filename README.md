@@ -3,6 +3,15 @@ Shake to send feedback for Android
 
 
 
+Add Internet permission to your manifest:
+```` xml
+
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+````
+
+
 ## Dependency Project Level
 
 Step 1. Add the JitPack repository to your build file
@@ -136,7 +145,11 @@ You can customize color by `FeedbackConfig()` class. Set this class in your `App
 			.setDialogButtonColor(R.color.your_color)
 			.setSubmitButtonTextColor(R.color.your_color)
                         .setCancelButtonTextColor(R.color.your_color)
-			.setSubmitButtonColor(R.color.your_color);
+			.setSubmitButtonColor(R.color.your_color)
+			.setFontFromAssets("your-font-in-assets.ttf")
+			//or
+                        .setFontFromResource(R.font.your-font);
+			
 
 	    }
 	}

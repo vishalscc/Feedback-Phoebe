@@ -1,5 +1,7 @@
 package com.scc.shake;
 
+import static com.scc.shake.utils.SharedPrefs.LOCAL_DATA;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,10 +12,27 @@ import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.scc.shake.api.ApiClient;
+import com.scc.shake.api.FeedbackModel;
+import com.scc.shake.utils.NetworkUtil;
+import com.scc.shake.utils.SharedPrefs;
+import com.scc.shake.utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.lang.reflect.Type;
+import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * FeedbackPhoebe contains Shake sensor detect and open feedback page
@@ -59,6 +78,63 @@ public class FeedbackPhoebe {
                 context.startActivity(intent);
             }
         });
+
+        syncData(context);
+
+    }
+
+    public void syncData(Context context) {
+
+        if (NetworkUtil.isInternetConnect(context)) {
+            String getJson = SharedPrefs.getString(context, LOCAL_DATA);
+
+            if (!getJson.isEmpty()) {
+
+                Gson gson = new Gson();
+
+                Type type = new TypeToken<List<Feedback>>() {
+                }.getType();
+                List<Feedback> list = gson.fromJson(getJson, type);
+
+                JSONArray jsonArray = new JSONArray();
+
+                for (Feedback feedback : list) {
+
+                    try {
+                        JSONObject jsonObject = new JSONObject();
+                        jsonObject.put("text", feedback.getText());
+                        jsonObject.put("os", feedback.getDeviceOS());
+                        jsonObject.put("device_type", feedback.getDeviceType());
+                        jsonObject.put("model", feedback.getDeviceModel());
+                        jsonObject.put("page_name", feedback.getPageName());
+
+                        jsonArray.put(jsonObject);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+
+                ApiClient.getApiService()
+                        .syncFeedback(Utils.getToken(context),
+                                Locale.getDefault().getLanguage(),
+                                jsonArray)
+                        .enqueue(new Callback<FeedbackModel>() {
+                            @Override
+                            public void onResponse(Call<FeedbackModel> call, Response<FeedbackModel> response) {
+                                if (response.isSuccessful() && response.body().getCode() == 200) {
+                                    SharedPrefs.clearPrefs(context);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<FeedbackModel> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+
+            }
+        }
 
     }
 

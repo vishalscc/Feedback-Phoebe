@@ -1,5 +1,7 @@
 package com.scc.shake;
 
+import static com.scc.shake.utils.SharedPrefs.LOCAL_DATA;
+
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,17 +14,36 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.scc.shake.api.ApiClient;
+import com.scc.shake.api.FeedbackModel;
+import com.scc.shake.utils.DialogUtil;
+import com.scc.shake.utils.NetworkUtil;
+import com.scc.shake.utils.SharedPrefs;
+import com.scc.shake.utils.Utils;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Feedback page user can submit their feedback in this page and send to server
  */
 public class FeedBackActivity extends AppCompatActivity {
 
-    Feedback feedback;
-    FeedbackPhoebe feedbackPhoebe;
-    SpannableString title;
-    SpannableString msg;
-    SpannableString posBtn;
-    SpannableString negBtn;
+    private final AppCompatActivity activity = this;
+    private Feedback feedback;
+    private FeedbackPhoebe feedbackPhoebe;
+    private SpannableString title;
+    private SpannableString msg;
+    private SpannableString posBtn;
+    private SpannableString negBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -152,9 +173,63 @@ public class FeedBackActivity extends AppCompatActivity {
 
     private void saveLocally(Feedback feedback) {
 
+        Gson gson = new Gson();
+        String getJson = SharedPrefs.getString(activity, LOCAL_DATA);
+        List<Feedback> list;
+
+        if (getJson.isEmpty()) {
+            list = new ArrayList<>();
+        } else {
+            Type type = new TypeToken<List<Feedback>>() {
+            }.getType();
+            list = gson.fromJson(getJson, type);
+        }
+
+        list.add(feedback);
+
+        String setjson = gson.toJson(list);
+        SharedPrefs.setString(activity, LOCAL_DATA, setjson);
+
+        complete();
     }
 
     private void saveRemotely(Feedback feedback) {
 
+
+        DialogUtil.showProgressDialog(activity, getSupportFragmentManager());
+        ApiClient.getApiService()
+                .sentFeedback(Utils.getToken(this),
+                        Locale.getDefault().getLanguage(),
+                        feedback.getDeviceType(),
+                        feedback.getDeviceModel(),
+                        feedback.getPageName(),
+                        feedback.getText(),
+                        feedback.getDeviceOS())
+                .enqueue(new Callback<FeedbackModel>() {
+                    @Override
+                    public void onResponse(Call<FeedbackModel> call, Response<FeedbackModel> response) {
+                        DialogUtil.dismissProgressDialog();
+                        if (response.isSuccessful() && response.body().getCode() == 200) {
+
+                            complete();
+                        } else if (response.body().getCode() == 401) {
+                            Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FeedbackModel> call, Throwable t) {
+                        DialogUtil.dismissProgressDialog();
+                        t.printStackTrace();
+                        Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
+    }
+
+    private void complete() {
+        Toast.makeText(activity, "Feedback send successfully", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

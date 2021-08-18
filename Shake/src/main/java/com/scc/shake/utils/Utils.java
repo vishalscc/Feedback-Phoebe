@@ -1,4 +1,4 @@
-package com.scc.shake;
+package com.scc.shake.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;

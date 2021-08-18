@@ -88,7 +88,7 @@ public class FeedBackActivity extends AppCompatActivity {
                     .setPositiveButton(posBtn, (dialogInterface, i) -> {
 
                         feedback.setText(edt_report.getText().toString());
-                        sendToServer(feedback);
+                        send(feedback);
 
                     })
                     .setNegativeButton(negBtn, (dialogInterface, i) -> {
@@ -119,14 +119,20 @@ public class FeedBackActivity extends AppCompatActivity {
 
     }
 
-    private void sendToServer(Feedback feedback) {
+    private void send(Feedback feedback) {
 
         if (Utils.getToken(this).isEmpty()) {
             Toast.makeText(this, "Api Token can't be empty", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String msg = "Description:- " + feedback.getText() + "\n\n" +
+        if (NetworkUtil.isInternetConnect(this)) {
+            saveRemotely(feedback);
+        } else {
+            saveLocally(feedback);
+        }
+
+        /*String msg = "Description:- " + feedback.getText() + "\n\n" +
                 "Device OS:- " + feedback.getDeviceOS() + "\n\n" +
                 "Device Type:- " + feedback.getDeviceType() + "\n\n" +
                 "Device Model:- " + feedback.getDeviceModel() + "\n\n" +
@@ -134,14 +140,21 @@ public class FeedBackActivity extends AppCompatActivity {
                 "Manufacturer:- " + feedback.getManufacturer() + "\n\n" +
                 "API Token:- " + Utils.getToken(this);
 
-
         new AlertDialog.Builder(this)
                 .setTitle("Feedback Details")
                 .setMessage(msg)
                 .setPositiveButton("Ok", (dialogInterface, i) -> {
                     dialogInterface.dismiss();
                 })
-                .show();
+                .show();*/
+
+    }
+
+    private void saveLocally(Feedback feedback) {
+
+    }
+
+    private void saveRemotely(Feedback feedback) {
 
     }
 }

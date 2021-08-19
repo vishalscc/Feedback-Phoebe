@@ -36,7 +36,7 @@ Add dependency in your app module
 
 ```gradle
 	dependencies {
-	        implementation 'com.github.vishalscc:Shake-To-Feedback:1.9'
+	        implementation 'com.github.vishalscc:Shake-To-Feedback:2.0'
 	}
 
 ```

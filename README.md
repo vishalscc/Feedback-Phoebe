@@ -156,6 +156,17 @@ You can customize color by `FeedbackConfig()` class. Set this class in your `App
 	
 ```
 
+Don't forget to add `Application` class into manifest
+
+```xml
+
+	<application
+		android:name=".YourAppName"
+		android:allowBackup="true"
+		...>
+
+```
+
 
 
 
